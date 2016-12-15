@@ -65,7 +65,7 @@ class EasyLocationDelegate {
     }
 
     void stopLocationUpdates() {
-        Intent intent = new Intent(activity, LocationBgService.class);
+        Intent intent = new Intent(activity, EasyLocationBgService.class);
         intent.setAction(AppConstants.ACTION_LOCATION_FETCH_STOP);
         activity.startService(intent);
     }
@@ -83,7 +83,7 @@ class EasyLocationDelegate {
         if (!isLocationEnabled())
             showLocationServicesRequireDialog();
         else {
-            Intent intent = new Intent(activity, LocationBgService.class);
+            Intent intent = new Intent(activity, EasyLocationBgService.class);
             intent.setAction(AppConstants.ACTION_LOCATION_FETCH_START);
             intent.putExtra(IntentKey.LOCATION_REQUEST, locationRequest);
             intent.putExtra(IntentKey.LOCATION_FETCH_MODE, mLocationFetchMode);

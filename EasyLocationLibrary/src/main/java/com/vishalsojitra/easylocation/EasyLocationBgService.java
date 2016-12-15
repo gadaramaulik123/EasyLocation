@@ -18,9 +18,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 
-public class LocationBgService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class EasyLocationBgService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static final long NO_FALLBACK = 0;
-    private final String TAG = LocationBgService.class.getSimpleName();
+    private final String TAG = EasyLocationBgService.class.getSimpleName();
     private GoogleApiClient googleApiClient;
     private int mLocationMode;
     private LocationRequest mLocationRequest;
