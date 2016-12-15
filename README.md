@@ -1,15 +1,14 @@
 # EasyLocation
 
-Easy Location for Android is a Library which makes it easy to get Location in Android Application, You need to take care of
-- Google Play services availability Check, Update Google play Service Dialog
+  Easy Location for Android is a Library which makes it easy to get Location in Android Application, You need to take care of
+- Google Play services availability Check, in not updated then ask `Update Google play Service Dialog`.
 - Creation of GoogleApiClient and its callbacks connected,disconnected etc.
-- Stopping and releasing resources for location updates
-- Handling Location permission scenarios
-- Checking Location services are On or Off
-- Getting last known location is not so easy either
-- Fallback to last known location if not getting location after certain duration
+- Handling Location permission.
+- Checking Location services are On or Off.
+- Getting last known location is not so easy either.
+- Fallback to last known location if not getting location after certain duration.
 
-**EasyLocation** does all this stuff in background, so that you can concentrate on your business logic than handling all above
+**EasyLocation** does all this stuff in background, so that you can use on your application than handling all above
 
 ## Getting started
 
