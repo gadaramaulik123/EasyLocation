@@ -53,9 +53,9 @@ public class EasyLocationBgService extends Service implements GoogleApiClient.Co
         super.onStartCommand(intent,flags,startId);
         Log.d(TAG,"googleApiClient start command "+ intent.getAction());
         if (intent.getAction().equals(AppConstants.ACTION_LOCATION_FETCH_START)) {
-            mLocationMode = intent.getIntExtra(IntentKey.LOCATION_FETCH_MODE, AppConstants.SINGLE_FIX);
-            mLocationRequest = intent.getParcelableExtra(IntentKey.LOCATION_REQUEST);
-            fallBackToLastLocationTime = intent.getLongExtra(IntentKey.FALLBACK_TO_LAST_LOCATION_TIME, NO_FALLBACK);
+            mLocationMode = intent.getIntExtra(EasyLocationIntentKey.LOCATION_FETCH_MODE, AppConstants.SINGLE_FIX);
+            mLocationRequest = intent.getParcelableExtra(EasyLocationIntentKey.LOCATION_REQUEST);
+            fallBackToLastLocationTime = intent.getLongExtra(EasyLocationIntentKey.FALLBACK_TO_LAST_LOCATION_TIME, NO_FALLBACK);
             if (mLocationRequest == null)
                 throw new IllegalStateException("Location request can't be null");
             if(googleApiClient.isConnected())
@@ -127,7 +127,7 @@ public class EasyLocationBgService extends Service implements GoogleApiClient.Co
             PreferenceUtil.getInstance(this).saveLastKnownLocation(location);
             Intent intent = new Intent();
             intent.setAction(AppConstants.INTENT_LOCATION_RECEIVED);
-            intent.putExtra(IntentKey.LOCATION, location);
+            intent.putExtra(EasyLocationIntentKey.LOCATION, location);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
         if (mLocationMode == AppConstants.SINGLE_FIX)

@@ -15,7 +15,7 @@ class LocationBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(AppConstants.INTENT_LOCATION_RECEIVED)) {
-            Location location = intent.getParcelableExtra(IntentKey.LOCATION);
+            Location location = intent.getParcelableExtra(EasyLocationIntentKey.LOCATION);
             easyLocationListener.onLocationReceived(location);
         }
     }

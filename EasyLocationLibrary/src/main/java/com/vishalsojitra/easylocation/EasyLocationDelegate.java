@@ -85,9 +85,9 @@ class EasyLocationDelegate {
         else {
             Intent intent = new Intent(activity, EasyLocationBgService.class);
             intent.setAction(AppConstants.ACTION_LOCATION_FETCH_START);
-            intent.putExtra(IntentKey.LOCATION_REQUEST, locationRequest);
-            intent.putExtra(IntentKey.LOCATION_FETCH_MODE, mLocationFetchMode);
-            intent.putExtra(IntentKey.FALLBACK_TO_LAST_LOCATION_TIME, fallBackToLastLocationTime);
+            intent.putExtra(EasyLocationIntentKey.LOCATION_REQUEST, locationRequest);
+            intent.putExtra(EasyLocationIntentKey.LOCATION_FETCH_MODE, mLocationFetchMode);
+            intent.putExtra(EasyLocationIntentKey.FALLBACK_TO_LAST_LOCATION_TIME, fallBackToLastLocationTime);
             activity.startService(intent);
         }
     }
