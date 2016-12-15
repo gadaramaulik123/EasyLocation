@@ -5,21 +5,28 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.text.TextUtils;
 
-class PreferenceUtil {
+class EasyLocationPreferenceUtil {
     private static final String LAST_KNOWN_LOCATION = "last_known_location";
     private static final String GPS = "GPS";
     private static final String PREF_NAME = "easylocation";
     private final SharedPreferences mPreferences;
-    private static PreferenceUtil instance;
+    private static EasyLocationPreferenceUtil instance;
 
-    public static PreferenceUtil getInstance(Context context) {
+    public static EasyLocationPreferenceUtil getInstance(Context context) {
         if(instance ==null) {
-            instance = new PreferenceUtil(context.getApplicationContext());
+            instance = new EasyLocationPreferenceUtil(context.getApplicationContext());
         }
         return instance;
     }
 
-    private PreferenceUtil(Context context) {
+    public static EasyLocationPreferenceUtil getInstance(Context context) {
+        if (instance == null) {
+            instance = new EasyLocationPreferenceUtil(context.getApplicationContext());
+        }
+        return instance;
+    }
+
+    private EasyLocationPreferenceUtil(Context context) {
         mPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 

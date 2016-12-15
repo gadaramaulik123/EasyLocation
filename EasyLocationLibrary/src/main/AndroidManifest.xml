@@ -6,7 +6,8 @@
 
     <application android:allowBackup="true" android:label="@string/app_name"
         android:supportsRtl="true">
-    <service android:name="com.vishalsojitra.easylocation.LocationBgService"
+        <service
+            android:name="com.vishalsojitra.easylocation.EasyLocationBgService"
         android:exported="false"
         />
     </application>

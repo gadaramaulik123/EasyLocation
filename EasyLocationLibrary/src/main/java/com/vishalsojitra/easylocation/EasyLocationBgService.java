@@ -18,9 +18,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 
-public class LocationBgService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,LocationListener {
+public class EasyLocationBgService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static final long NO_FALLBACK = 0;
-    private final String TAG = LocationBgService.class.getSimpleName();
+    private final String TAG = EasyLocationBgService.class.getSimpleName();
     private GoogleApiClient googleApiClient;
     private int mLocationMode;
     private LocationRequest mLocationRequest;
@@ -52,16 +52,15 @@ public class LocationBgService extends Service implements GoogleApiClient.Connec
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent,flags,startId);
         Log.d(TAG,"googleApiClient start command "+ intent.getAction());
-        if(intent.getAction().equals(AppConstants.ACTION_LOCATION_FETCH_START)) {
-            mLocationMode = intent.getIntExtra(IntentKey.LOCATION_FETCH_MODE, AppConstants.SINGLE_FIX);
-            mLocationRequest = intent.getParcelableExtra(IntentKey.LOCATION_REQUEST);
-            fallBackToLastLocationTime = intent.getLongExtra(IntentKey.FALLBACK_TO_LAST_LOCATION_TIME,NO_FALLBACK);
+        if (intent.getAction().equals(EasyLocationConstants.ACTION_LOCATION_FETCH_START)) {
+            mLocationMode = intent.getIntExtra(EasyLocationIntentKey.LOCATION_FETCH_MODE, EasyLocationConstants.SINGLE_FIX);
+            mLocationRequest = intent.getParcelableExtra(EasyLocationIntentKey.LOCATION_REQUEST);
+            fallBackToLastLocationTime = intent.getLongExtra(EasyLocationIntentKey.FALLBACK_TO_LAST_LOCATION_TIME, NO_FALLBACK);
             if (mLocationRequest == null)
                 throw new IllegalStateException("Location request can't be null");
             if(googleApiClient.isConnected())
                 requestLocationUpdates();
-        }
-        else if(intent.getAction().equals(AppConstants.ACTION_LOCATION_FETCH_STOP)) {
+        } else if (intent.getAction().equals(EasyLocationConstants.ACTION_LOCATION_FETCH_STOP)) {
             stopLocationService();
         }
         return START_NOT_STICKY;
@@ -125,13 +124,13 @@ public class LocationBgService extends Service implements GoogleApiClient.Connec
     public void onLocationChanged(Location location) {
         Log.d(TAG,"googleApiClient location received");
         if(location!=null) {
-            PreferenceUtil.getInstance(this).saveLastKnownLocation(location);
+            EasyLocationPreferenceUtil.getInstance(this).saveLastKnownLocation(location);
             Intent intent = new Intent();
-            intent.setAction(AppConstants.INTENT_LOCATION_RECEIVED);
-            intent.putExtra(IntentKey.LOCATION,location);
+            intent.setAction(EasyLocationConstants.INTENT_LOCATION_RECEIVED);
+            intent.putExtra(EasyLocationIntentKey.LOCATION, location);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
-        if(mLocationMode == AppConstants.SINGLE_FIX)
+        if (mLocationMode == EasyLocationConstants.SINGLE_FIX)
             stopLocationService();
     }
 }
