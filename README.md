@@ -1,6 +1,6 @@
 # EasyLocation
 
-Getting location updates requires lots of boilerplate code in Android, You need to take care of
+Easy Location for Android is a Library which makes it easy to get Location in Android Application, You need to take care of
 - Google Play services availability Check, Update Google play Service Dialog
 - Creation of GoogleApiClient and its callbacks connected,disconnected etc.
 - Stopping and releasing resources for location updates
@@ -28,7 +28,7 @@ allprojects {
 
 **com.google.android.gms:play-services-location** dependency also needs to be added like this
 
-**x.x.x** can be replaced with google play service version your app is using [versions information available here](https://developers.google.com/android/guides/releases) 
+**x.x.x** can be replaced with google play service latest version in your app is using [versions](https://developers.google.com/android/guides/releases) 
 
 ```gradle
  dependencies {
@@ -44,14 +44,14 @@ Extend your `Activity` from `EasyLocationAppCompatActivity` or `EasyLocationActi
 ```java
 LocationRequest locationRequest = new LocationRequest()
         .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
-        .setInterval(5000)
-        .setFastestInterval(5000);
+        .setInterval(4000)
+        .setFastestInterval(4000);
 ```                        
 *Create EasyLocation request, and set locationRequest created*
 ```java
 EasyLocationRequest easyLocationRequest = new EasyLocationRequestBuilder()
         .setLocationRequest(locationRequest)
-        .setFallBackToLastLocationTime(3000)
+        .setFallBackToLastLocationTime(4000)
         .build();
 }
 ```
