@@ -46,14 +46,14 @@ public class EasyLocationBgService extends Service implements GoogleApiClient.Co
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-        Log.d(TAG, "googleApiClient created");
+        Log.d(TAG, "onCreate: googleApiClient created");
         googleApiClient.connect();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        Log.d(TAG, "googleApiClient start command " + intent.getAction());
+        Log.d(TAG, "onStartCommand: googleApiClient start command " + intent.getAction());
         if (intent.getAction().equals(EasyLocationConstants.ACTION_LOCATION_FETCH_START)) {
             mLocationMode = intent.getIntExtra(EasyLocationIntentKey.LOCATION_FETCH_MODE, EasyLocationConstants.SINGLE_FIX);
             mLocationRequest = intent.getParcelableExtra(EasyLocationIntentKey.LOCATION_REQUEST);
@@ -109,39 +109,38 @@ public class EasyLocationBgService extends Service implements GoogleApiClient.Co
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Log.d(TAG, "googleApiClient connected");
+        Log.d(TAG, "onConnected: googleApiClient connected");
         requestLocationUpdates();
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.d(TAG, "googleApiClient connection suspended");
+        Log.d(TAG, "onConnectionSuspended: googleApiClient connection suspended");
         stopLocationService();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "googleApiClient connection failed");
+        Log.d(TAG, "onConnectionFailed: googleApiClient connection failed");
         stopLocationService();
     }
 
     private void stopLocationService() {
         if (handler != null)
             handler.removeCallbacksAndMessages(null);
-
-        Log.d(TAG, "googleApiClient removing location updates");
+        Log.d(TAG, "stopLocationService: googleApiClient removing location updates");
         if (googleApiClient != null && googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-            Log.d(TAG, "googleApiClient disconnect");
+            Log.d(TAG, "stopLocationService: googleApiClient disconnect");
             googleApiClient.disconnect();
         }
-        Log.d(TAG, "googleApiClient stop service");
+        Log.d(TAG, "stopLocationService: googleApiClient stop service");
         stopSelf();
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(TAG, "googleApiClient location received");
+        Log.d(TAG, "onLocationChanged: googleApiClient location received");
         if (location != null) {
             EasyPreferenceUtil.getInstance(this).saveLastKnownLocation(location);
             Intent intent = new Intent();
