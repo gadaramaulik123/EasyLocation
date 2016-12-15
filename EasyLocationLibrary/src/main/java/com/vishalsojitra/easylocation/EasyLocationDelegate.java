@@ -21,8 +21,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.LocationRequest;
 
-import static com.vishalsojitra.easylocation.AppConstants.CONTINUOUS_LOCATION_UPDATES;
-import static com.vishalsojitra.easylocation.AppConstants.SINGLE_FIX;
+import static com.vishalsojitra.easylocation.EasyLocationConstants.CONTINUOUS_LOCATION_UPDATES;
+import static com.vishalsojitra.easylocation.EasyLocationConstants.SINGLE_FIX;
 
 class EasyLocationDelegate {
     private static final int PERMISSIONS_REQUEST = 100;
@@ -32,7 +32,7 @@ class EasyLocationDelegate {
 
     private final Activity activity;
     private final EasyLocationListener easyLocationListener;
-    private final LocationBroadcastReceiver locationReceiver;
+    private final EasyLocationBroadcastReceiver locationReceiver;
     private LocationManager mLocationManager;
     private int mLocationFetchMode;
     private LocationRequest mLocationRequest;
@@ -42,7 +42,7 @@ class EasyLocationDelegate {
     EasyLocationDelegate(Activity activity, EasyLocationListener easyLocationListener) {
         this.activity = activity;
         this.easyLocationListener = easyLocationListener;
-        locationReceiver = new LocationBroadcastReceiver(easyLocationListener);
+        locationReceiver = new EasyLocationBroadcastReceiver(easyLocationListener);
     }
 
 
@@ -66,7 +66,7 @@ class EasyLocationDelegate {
 
     void stopLocationUpdates() {
         Intent intent = new Intent(activity, EasyLocationBgService.class);
-        intent.setAction(AppConstants.ACTION_LOCATION_FETCH_STOP);
+        intent.setAction(EasyLocationConstants.ACTION_LOCATION_FETCH_STOP);
         activity.startService(intent);
     }
 
@@ -84,7 +84,7 @@ class EasyLocationDelegate {
             showLocationServicesRequireDialog();
         else {
             Intent intent = new Intent(activity, EasyLocationBgService.class);
-            intent.setAction(AppConstants.ACTION_LOCATION_FETCH_START);
+            intent.setAction(EasyLocationConstants.ACTION_LOCATION_FETCH_START);
             intent.putExtra(EasyLocationIntentKey.LOCATION_REQUEST, locationRequest);
             intent.putExtra(EasyLocationIntentKey.LOCATION_FETCH_MODE, mLocationFetchMode);
             intent.putExtra(EasyLocationIntentKey.FALLBACK_TO_LAST_LOCATION_TIME, fallBackToLastLocationTime);
@@ -173,7 +173,7 @@ class EasyLocationDelegate {
 
     private void registerLocationBroadcastReceiver() {
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(AppConstants.INTENT_LOCATION_RECEIVED);
+        intentFilter.addAction(EasyLocationConstants.INTENT_LOCATION_RECEIVED);
         LocalBroadcastManager.getInstance(activity).registerReceiver(locationReceiver, intentFilter);
     }
 
@@ -224,7 +224,7 @@ class EasyLocationDelegate {
     }
 
     Location getLastKnownLocation() {
-        return PreferenceUtil.getInstance(activity).getLastKnownLocation();
+        return EasyPreferenceUtil.getInstance(activity).getLastKnownLocation();
     }
 
     void requestLocationUpdates(EasyLocationRequest easyLocationRequest) {

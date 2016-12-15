@@ -1,6 +1,6 @@
 package com.vishalsojitra.easylocation;
 
-class AppConstants {
+class EasyLocationConstants {
     public static final int SINGLE_FIX = 1;
     public static final int CONTINUOUS_LOCATION_UPDATES = 2;
     public static final String ACTION_LOCATION_FETCH_START = "location.fetch.start";

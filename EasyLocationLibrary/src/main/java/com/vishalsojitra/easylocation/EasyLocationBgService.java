@@ -52,15 +52,15 @@ public class EasyLocationBgService extends Service implements GoogleApiClient.Co
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent,flags,startId);
         Log.d(TAG,"googleApiClient start command "+ intent.getAction());
-        if (intent.getAction().equals(AppConstants.ACTION_LOCATION_FETCH_START)) {
-            mLocationMode = intent.getIntExtra(EasyLocationIntentKey.LOCATION_FETCH_MODE, AppConstants.SINGLE_FIX);
+        if (intent.getAction().equals(EasyLocationConstants.ACTION_LOCATION_FETCH_START)) {
+            mLocationMode = intent.getIntExtra(EasyLocationIntentKey.LOCATION_FETCH_MODE, EasyLocationConstants.SINGLE_FIX);
             mLocationRequest = intent.getParcelableExtra(EasyLocationIntentKey.LOCATION_REQUEST);
             fallBackToLastLocationTime = intent.getLongExtra(EasyLocationIntentKey.FALLBACK_TO_LAST_LOCATION_TIME, NO_FALLBACK);
             if (mLocationRequest == null)
                 throw new IllegalStateException("Location request can't be null");
             if(googleApiClient.isConnected())
                 requestLocationUpdates();
-        } else if (intent.getAction().equals(AppConstants.ACTION_LOCATION_FETCH_STOP)) {
+        } else if (intent.getAction().equals(EasyLocationConstants.ACTION_LOCATION_FETCH_STOP)) {
             stopLocationService();
         }
         return START_NOT_STICKY;
@@ -124,13 +124,13 @@ public class EasyLocationBgService extends Service implements GoogleApiClient.Co
     public void onLocationChanged(Location location) {
         Log.d(TAG,"googleApiClient location received");
         if(location!=null) {
-            PreferenceUtil.getInstance(this).saveLastKnownLocation(location);
+            EasyPreferenceUtil.getInstance(this).saveLastKnownLocation(location);
             Intent intent = new Intent();
-            intent.setAction(AppConstants.INTENT_LOCATION_RECEIVED);
+            intent.setAction(EasyLocationConstants.INTENT_LOCATION_RECEIVED);
             intent.putExtra(EasyLocationIntentKey.LOCATION, location);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
-        if (mLocationMode == AppConstants.SINGLE_FIX)
+        if (mLocationMode == EasyLocationConstants.SINGLE_FIX)
             stopLocationService();
     }
 }
